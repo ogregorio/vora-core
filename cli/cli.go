@@ -2,12 +2,15 @@ package cli
 
 import (
 	"fmt"
-	commands "graphgdb/cli/commands"
 	consts "graphgdb/cli/commands"
+	read "graphgdb/io/read"
 )
 
 func Run() {
 	consts.DEBUG = true
-	fmt.Println("[graphgdb #]")
-	commands.Test("teste")
+	var forceExit bool
+	for !forceExit {
+		fmt.Print("[graphgdb #] ")
+		forceExit = Interpreter(read.Read())
+	}
 }
