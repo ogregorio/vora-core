@@ -1,11 +1,10 @@
 package constants
 
 import (
-	"errors"
-	"fmt"
+	errors "errors"
 	files "graphgdb/utils/files"
-	"path/filepath"
-	"strings"
+	os "os"
+	strings "strings"
 )
 
 var constants map[string]string
@@ -13,14 +12,8 @@ var constants map[string]string
 var instantiated bool = false
 
 func Constants(path string) (bool, error) {
-	absolutePath, _ := filepath.Abs("./config/.config")
 
-	// if has a path param, change default source
-	if path != "" {
-		absolutePath, _ = filepath.Abs(path)
-	}
-
-	dataConsts, err := files.Read(absolutePath)
+	dataConsts, err := files.Read(path)
 
 	if err != nil {
 		return false, errors.New("file not found")
@@ -43,14 +36,13 @@ func Constants(path string) (bool, error) {
 }
 
 //GetConstant expected as first param a local to get const, and second param as value to find
-func GetConstant(param ...string) (string, error) {
+func getConstant(param ...string) (string, error) {
 
 	var concluded bool = true
 	var err error
 
 	// if dictionary of constants has not been instantiated
 	if !instantiated {
-		fmt.Println("teste")
 		concluded, err = Constants(param[0])
 	}
 
@@ -67,4 +59,13 @@ func GetConstant(param ...string) (string, error) {
 	}
 
 	return "", err
+}
+
+func GetConstant(param ...string) (string, error) {
+	if len(param) == 1 {
+		return getConstant(os.Getenv("GRAPHGDB_ROOT"), param[0])
+	} else if len(param) == 2 {
+		return getConstant(param[0], param[1])
+	}
+	return "", nil
 }
