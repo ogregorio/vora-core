@@ -1,16 +1,16 @@
 package io
 
 import (
-	"bufio"
-	"fmt"
-	"os"
-	"path/filepath"
+	bufio "bufio"
+	fmt "fmt"
+	ioutil "io/ioutil"
+	os "os"
 )
 
 //Read get from a archive a vector of strings
 func Read(path string) ([]string, error) {
 
-	archive, err := os.Open(absolutePath(path)) //open file
+	archive, err := os.Open(path) //open file
 
 	if err != nil {
 		return nil, err
@@ -25,13 +25,13 @@ func Read(path string) ([]string, error) {
 		lines = append(lines, scanner.Text())
 	}
 
-	return lines, scanner.Err() //return lines or error
+	return lines, scanner.Err() //return lines and error
 }
 
 //WriteMultiLine write in a file a lot of lines in a string vector
 func Write(path string, content ...string) error {
 
-	archive, err := os.Create(absolutePath(path)) //create archive to write
+	archive, err := os.Create(path) //create archive to write
 
 	if err != nil {
 		return err
@@ -48,13 +48,18 @@ func Write(path string, content ...string) error {
 	return writer.Flush() //return lines or error
 }
 
-func absolutePath(path string) string {
-	absolutePath, _ := filepath.Abs("./config/.config")
+//ReadAllBytes get from a archive a vector of bytes
+func ReadAllBytes(path string) ([]byte, error) {
 
-	// if has a path param, change default source
-	if path != "" {
-		absolutePath, _ = filepath.Abs(path)
-	}
+	archive, err := os.Open(path) //open file
 
-	return absolutePath
+	if err != nil {
+		return nil, err
+	} //if error was found
+
+	content, err := ioutil.ReadAll(archive)
+
+	defer archive.Close() //archive will be closed
+
+	return content, err //return bytes and error
 }

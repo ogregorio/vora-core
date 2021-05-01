@@ -1,9 +1,7 @@
 package main
 
-import (
-	cli "graphgdb/cli"
-)
+import "graphgdb/cmd"
 
 func main() {
-	cli.Run()
+	cmd.Execute()
 }
