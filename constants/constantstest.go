@@ -7,14 +7,14 @@ import (
 
 func ConstantsTest() (bool, error) {
 	for i := 0; i < 10; i++ {
-		toPrint, err := GetConstant("TEST_PATH_" + strconv.Itoa(i))
-		if toPrint == "PASS" && err == nil {
-			continue
-		} else if nil != err {
+		toPrint, err := GetConstant("./config/.configtest", "TEST_PATH_"+strconv.Itoa(i))
+
+		if toPrint != "PASS" {
 			return false, errors.New("error in file read")
-		} else {
+		} else if err != nil {
 			return false, errors.New("error in constants test")
 		}
+
 	}
 
 	return true, nil
