@@ -17,26 +17,40 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package cmd
 
 import (
-	tests "graphgdb/tests"
+	access "graphgdb/access"
+	cli "graphgdb/cmd/cli"
 
 	cobra "github.com/spf13/cobra"
 )
 
-// testCmd represents the test command
-var testCmd = &cobra.Command{
-	Use:   "test [OPTIONS] [COMMANDS]",
-	Short: "Run a test to validate the components or events situation.",
-	Long: `Run a test to validate the components or events situation,
-	this will ensure that your database is running in good health.`,
-	Args: cobra.MinimumNArgs(1),
+// loginCmd represents the login command
+var loginCmd = &cobra.Command{
+	Use:   "login",
+	Short: "Login provides a way to guarantee access to data and database files.",
+	Long: `Login provides a way to guarantee access to data and database files.
+	It expects a username and password entered in the initial setup.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		switch args[0] {
-		case "all":
-			tests.Test()
+		case "verify":
+			loginCmdVerify()
+			break
+		default:
+			access.Access(args[0], args[1])
+			loginCmdVerify()
+			break
 		}
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(testCmd)
+	rootCmd.AddCommand(loginCmd)
+}
+
+func loginCmdVerify() {
+	result, err := access.VerifyAccess()
+	if err == nil && result {
+		cli.G.Println("VERIFIED, you are logged.")
+	} else {
+		cli.R.Println("FAILED: " + err.Error())
+	}
 }

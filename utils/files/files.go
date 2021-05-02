@@ -48,7 +48,7 @@ func Write(path string, content ...string) error {
 	return writer.Flush() //return lines or error
 }
 
-//ReadAllBytes get from a archive a vector of bytes
+//ReadAllBytes get from a archive a bytes's array
 func ReadAllBytes(path string) ([]byte, error) {
 
 	archive, err := os.Open(path) //open file
@@ -62,4 +62,24 @@ func ReadAllBytes(path string) ([]byte, error) {
 	defer archive.Close() //archive will be closed
 
 	return content, err //return bytes and error
+}
+
+//WriteAllBytes write in a archive a []byte
+func WriteAllBytes(path string, content []byte) error {
+
+	archive, err := os.Create(path) //create archive to write
+
+	if err != nil {
+		return err
+	} //if error was found
+
+	defer archive.Close() //archive will be closed
+
+	// Write file with archive
+	writedBytes, err := archive.Write(content)
+	if writedBytes > 0 && err != nil {
+		return nil
+	} else {
+		return err
+	}
 }

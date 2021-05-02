@@ -1,6 +1,6 @@
 package main
 
-import "graphgdb/cmd"
+import cmd "graphgdb/cmd"
 
 func main() {
 	cmd.Execute()
