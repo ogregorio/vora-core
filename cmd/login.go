@@ -17,6 +17,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package cmd
 
 import (
+	"fmt"
 	access "graphgdb/access"
 	cli "graphgdb/cmd/cli"
 
@@ -48,6 +49,7 @@ func init() {
 
 func loginCmdVerify() {
 	result, err := access.VerifyAccess()
+	fmt.Println(result)
 	if err == nil && result {
 		cli.G.Println("VERIFIED, you are logged.")
 	} else {

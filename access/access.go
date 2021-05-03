@@ -2,10 +2,11 @@ package access
 
 import (
 	errors "errors"
+	"fmt"
 	crypt "graphgdb/crypt"
 	errorTreat "graphgdb/io/error"
 	files "graphgdb/utils/files"
-	"strings"
+	strings "strings"
 
 	viper "github.com/spf13/viper"
 )
@@ -24,43 +25,51 @@ func Access(login string, password string) {
 	burnAccess()
 }
 
-func GetKeygenLocal() string {
-	readAccess()
-	return credentials.sha3
-}
-
 func VerifyAccess() (bool, error) {
-	if credentials.sha3 == string(crypt.Keygen(credentials.login, credentials.password)) {
+	accessKey, err := readAccess()
+	if credentials.sha3 == accessKey {
 		return true, nil
 	} else {
-		return false, errors.New("unverified access")
+		return false, err
 	}
 }
 
+/*
+	the encrypted file encrypts the credentials using an encrypted key
+ 	(which is the result of the system root generatrix generated in setup + the credential itself)
+*/
 func burnAccess() {
-	err := files.WriteAllBytes(
-		viper.GetString("credential"),
-		[]byte(crypt.Keygen(getCredentials(), getGeneratrix())),
+	encrypted := crypt.Encrypt(
+		[]byte(
+			crypt.Keygen(
+				crypt.Generatrix(),
+			),
+		), getCredentials(),
 	)
+	err := files.Write(viper.GetString("credential"), encrypted)
 	errorTreat.CheckError(err)
 }
 
-func readAccess() {
+func readAccess() (string, error) {
 	data, err := files.Read(viper.GetString("credential"))
 	errorTreat.CheckError(err)
-	access := crypt.Decrypt(
-		crypt.Keygen(getCredentials(), getGeneratrix()),
-		data[0])
-	values := strings.Split(string(access), " ")
-	credentials = Credentials{login: values[0], password: values[1], sha3: values[2]}
+	decrypted := crypt.Decrypt(
+		[]byte(
+			crypt.Keygen(
+				crypt.Generatrix(),
+			),
+		), data[0],
+	)
+	access := strings.Split(string(decrypted), " ")
+	if len(access) == 3 {
+		credentials = Credentials{login: access[0], password: access[1], sha3: access[2]}
+		return access[2], nil
+	} else {
+		fmt.Println(credentials)
+		return "err", errors.New("impossible to read access")
+	}
 }
 
 func getCredentials() string {
 	return credentials.login + " " + credentials.password + " " + credentials.sha3
-}
-
-func getGeneratrix() string {
-	root, err := files.Read(viper.GetString("root"))
-	errorTreat.CheckError(err)
-	return root[0]
 }
