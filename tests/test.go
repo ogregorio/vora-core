@@ -1,9 +1,9 @@
 package consts
 
 import (
-	cli "graphgdb/cmd/cli"
+	gui "graphgdb/gui"
 )
 
 func Test(argv ...string) {
-	cli.G.Println("PASS")
+	gui.G.Println("PASS")
 }

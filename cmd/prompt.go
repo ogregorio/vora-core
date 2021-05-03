@@ -17,41 +17,22 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package cmd
 
 import (
-	access "graphgdb/access"
-	gui "graphgdb/gui"
+	prompt "graphgdb/prompt"
 
 	cobra "github.com/spf13/cobra"
 )
 
-// loginCmd represents the login command
-var loginCmd = &cobra.Command{
-	Use:   "login",
-	Short: "Login provides a way to guarantee access to data and database files.",
-	Long: `Login provides a way to guarantee access to data and database files.
-	It expects a username and password entered in the initial setup.`,
+// promptCmd represents the prompt command
+var promptCmd = &cobra.Command{
+	Use:   "prompt",
+	Short: "Prompt run graphgdb as command prompt",
+	Long: `Prompt launches a graphgdb internal command prompt to speed up queries,
+	 check commands and speed up interaction with the database.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		switch args[0] {
-		case "verify":
-			loginCmdVerify()
-			break
-		default:
-			access.Access(args[0], args[1])
-			loginCmdVerify()
-			break
-		}
+		prompt.Launch()
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(loginCmd)
-}
-
-func loginCmdVerify() {
-	result, err := access.VerifyAccess()
-	gui.P.Println(result)
-	if err == nil && result {
-		gui.G.Println("VERIFIED, you are logged.")
-	} else {
-		gui.R.Println("FAILED: " + err.Error())
-	}
+	rootCmd.AddCommand(promptCmd)
 }

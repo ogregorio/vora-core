@@ -1,4 +1,4 @@
-package cmd
+package gui
 
 import (
 	"github.com/gookit/color"
