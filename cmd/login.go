@@ -33,11 +33,8 @@ var loginCmd = &cobra.Command{
 		switch args[0] {
 		case "verify":
 			loginCmdVerify()
-			break
 		default:
-			access.Access(args[0], args[1])
-			loginCmdVerify()
-			break
+			loginGrantPermissions(args[0], args[1])
 		}
 	},
 }
@@ -47,10 +44,18 @@ func init() {
 }
 
 func loginCmdVerify() {
-	result, err := access.VerifyAccess()
-	gui.P.Println(result)
-	if err == nil && result {
-		gui.G.Println("VERIFIED, you are logged.")
+	result := access.VerifyAccess()
+	if result {
+		gui.G.Println("PASS: you are logged.")
+	} else {
+		gui.R.Println("FAILED: you aren't logged.")
+	}
+}
+
+func loginGrantPermissions(login string, password string) {
+	err := access.GrantAccess(login, password)
+	if err == nil {
+		gui.G.Println("PASS: Permissions granted.")
 	} else {
 		gui.R.Println("FAILED: " + err.Error())
 	}

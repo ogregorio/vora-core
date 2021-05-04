@@ -33,5 +33,7 @@ func call(input string) {
 	switch input {
 	case "login":
 		commands.Login()
+	case "exit":
+		commands.Exit()
 	}
 }
