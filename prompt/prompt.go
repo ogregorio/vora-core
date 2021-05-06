@@ -1,7 +1,7 @@
 package prompt
 
 import (
-	"graphgdb/gui"
+	gui "graphgdb/gui"
 	commands "graphgdb/prompt/commands"
 
 	promptui "github.com/manifoldco/promptui"
@@ -13,7 +13,7 @@ func Launch() {
 	}
 
 	prompt := promptui.Prompt{
-		Label:    "graphgdb >> ",
+		Label:    "graphgdb",
 		Validate: validate,
 	}
 
@@ -35,5 +35,9 @@ func call(input string) {
 		commands.Login()
 	case "exit":
 		commands.Exit()
+	case "add":
+		commands.Add()
+	case "print":
+		commands.Print()
 	}
 }

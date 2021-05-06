@@ -17,7 +17,7 @@ func Default() string {
 	}
 
 	prompt := promptui.Prompt{
-		Label:    "graphgdb >>",
+		Label:    "graphgdb",
 		Validate: validate,
 	}
 
