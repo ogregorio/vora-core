@@ -1,7 +1,7 @@
 package commands
 
 import (
-	access "graphgdb/access"
+	access "vora-core/access"
 )
 
 func Exit() {

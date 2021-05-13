@@ -17,7 +17,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package cmd
 
 import (
-	prompt "graphgdb/prompt"
+	prompt "vora-core/prompt"
 
 	cobra "github.com/spf13/cobra"
 )
@@ -25,8 +25,8 @@ import (
 // promptCmd represents the prompt command
 var promptCmd = &cobra.Command{
 	Use:   "prompt",
-	Short: "Prompt run graphgdb as command prompt",
-	Long: `Prompt launches a graphgdb internal command prompt to speed up queries,
+	Short: "Prompt run vora-core as command prompt",
+	Long: `Prompt launches a vora-core internal command prompt to speed up queries,
 	 check commands and speed up interaction with the database.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		prompt.Launch()

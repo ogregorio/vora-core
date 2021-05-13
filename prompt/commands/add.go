@@ -1,8 +1,8 @@
 package commands
 
 import (
-	"graphgdb/gui"
-	database "graphgdb/models"
+	"vora-core/gui"
+	database "vora-core/models"
 )
 
 func Add() string {
@@ -33,4 +33,8 @@ func addGraph(name string) {
 
 func addNode(graph string, node string) {
 	database.AddNode(graph, node)
+}
+
+func addEdge(graph string, node string, node2 string) {
+	database.AddEdge(graph, node, node2)
 }

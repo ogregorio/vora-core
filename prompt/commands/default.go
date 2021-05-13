@@ -2,7 +2,7 @@ package commands
 
 import (
 	errors "errors"
-	errorTreat "graphgdb/io/error"
+	errorTreat "vora-core/io/error"
 
 	promptui "github.com/manifoldco/promptui"
 )
@@ -17,7 +17,7 @@ func Default() string {
 	}
 
 	prompt := promptui.Prompt{
-		Label:    "graphgdb",
+		Label:    "vora-core",
 		Validate: validate,
 	}
 

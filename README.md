@@ -1,4 +1,4 @@
-# graphgdb
+# vora-core
 A simple database graph based.
 
 Dependencies:

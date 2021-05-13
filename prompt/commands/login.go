@@ -1,8 +1,8 @@
 package commands
 
 import (
-	access "graphgdb/access"
-	gui "graphgdb/gui"
+	access "vora-core/access"
+	gui "vora-core/gui"
 )
 
 func Login() {

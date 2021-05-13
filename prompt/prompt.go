@@ -1,8 +1,8 @@
 package prompt
 
 import (
-	gui "graphgdb/gui"
-	commands "graphgdb/prompt/commands"
+	gui "vora-core/gui"
+	commands "vora-core/prompt/commands"
 
 	promptui "github.com/manifoldco/promptui"
 )
@@ -13,7 +13,7 @@ func Launch() {
 	}
 
 	prompt := promptui.Prompt{
-		Label:    "graphgdb",
+		Label:    "vora-core",
 		Validate: validate,
 	}
 

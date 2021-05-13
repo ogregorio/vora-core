@@ -1,6 +1,6 @@
 package models
 
-import graph "graphgdb/models/graph"
+import graph "vora-core/models/graph"
 
 var graphs []graph.Graph
 
@@ -11,6 +11,11 @@ func NewDatabase() {
 func AddNode(g string, n string) {
 	gr := GetGraphByName(g)
 	graph.AddNode(gr, n)
+}
+
+func AddEdge(g string, s1 string, s2 string) {
+	gr := GetGraphByName(g)
+	graph.AddEdge(gr, s1, s2)
 }
 
 func AddGraph(name string) {

@@ -17,7 +17,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package cmd
 
 import (
-	commands "graphgdb/prompt/commands"
+	commands "vora-core/prompt/commands"
 
 	cobra "github.com/spf13/cobra"
 )
@@ -25,7 +25,7 @@ import (
 // setupCmd represents the setup command
 var setupCmd = &cobra.Command{
 	Use:   "setup",
-	Short: "Setup graphgdb in yout machine.",
+	Short: "Setup vora-core in yout machine.",
 	Run: func(cmd *cobra.Command, args []string) {
 		commands.Setup()
 	},

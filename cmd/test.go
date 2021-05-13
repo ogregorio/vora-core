@@ -17,7 +17,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package cmd
 
 import (
-	tests "graphgdb/tests"
+	tests "vora-core/tests"
 
 	cobra "github.com/spf13/cobra"
 )

@@ -1,11 +1,11 @@
 package commands
 
 import (
-	access "graphgdb/access"
-	crypt "graphgdb/crypt"
-	gui "graphgdb/gui"
-	files "graphgdb/utils/files"
 	"strings"
+	access "vora-core/access"
+	crypt "vora-core/crypt"
+	gui "vora-core/gui"
+	files "vora-core/utils/files"
 
 	viper "github.com/spf13/viper"
 	babble "github.com/tjarratt/babble"

@@ -1,9 +1,9 @@
 package main
 
 import (
-	cmd "graphgdb/cmd"
-	database "graphgdb/models"
-	system "graphgdb/system"
+	cmd "vora-core/cmd"
+	database "vora-core/models"
+	system "vora-core/system"
 )
 
 func main() {

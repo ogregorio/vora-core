@@ -17,8 +17,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package cmd
 
 import (
-	access "graphgdb/access"
-	gui "graphgdb/gui"
+	access "vora-core/access"
+	gui "vora-core/gui"
 
 	cobra "github.com/spf13/cobra"
 )

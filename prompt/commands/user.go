@@ -2,7 +2,7 @@ package commands
 
 import (
 	errors "errors"
-	errorTreat "graphgdb/io/error"
+	errorTreat "vora-core/io/error"
 
 	promptui "github.com/manifoldco/promptui"
 )

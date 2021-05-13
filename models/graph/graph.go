@@ -1,10 +1,13 @@
 package graph
 
 import (
-	"fmt"
-	edge "graphgdb/models/edge"
-	node "graphgdb/models/node"
-	strings "strings"
+	json "encoding/json"
+	fmt "fmt"
+	os "os"
+	edge "vora-core/models/edge"
+	node "vora-core/models/node"
+
+	tableprinter "github.com/lensesio/tableprinter"
 )
 
 const X byte = 0
@@ -12,42 +15,34 @@ const Y byte = 1
 
 type Graph struct {
 	name  string
-	space [][]string
-	nodes []node.Node
+	space map[string][]edge.Edge
+	nodes map[string]node.Node
+	edges map[string]edge.Edge
 }
 
-func New(name string) Graph {
-	var g Graph
-	g.name = name
-	g.space = make([][]string, 2)
-	g.space[X] = []string{}
-	g.space[Y] = []string{}
-	return g
+func New(s string) Graph {
+	var graph Graph
+	graph.name = s
+	graph.space = make(map[string][]edge.Edge)
+	graph.nodes = make(map[string]node.Node)
+	graph.edges = make(map[string]edge.Edge)
+	return graph
 }
 
-func AddNode(g Graph, name string) {
-	n := node.New(name)
-	n = node.SetRef(n, g.name+"@"+node.GetRef(n))
-	addNode(g, n)
+func AddNode(g Graph, s string) {
+	n := node.New(s)
+	g.nodes[s] = n
+	g.space[node.GetRef(n)] = []edge.Edge{}
 }
 
-func addNode(g Graph, n node.Node) {
-	g.space[0] = append(g.space[X], node.GetRef(n))
-	g.space[1] = append(g.space[Y], node.GetRef(n))
-	g.nodes = append(g.nodes, n)
-}
-
-func AddEdge(e edge.Edge) {
-
-}
-
-func ReturnNodePosition(g Graph, n node.Node) int {
-	for i := 0; i < len(g.space[X]); i++ {
-		if g.space[X][i] == node.GetRef(n) {
-			return i
-		}
-	}
-	return -1
+func AddEdge(g Graph, s1 string, s2 string) {
+	var n [2]string
+	n[0] = node.GetRef(g.nodes[s1])
+	n[1] = node.GetRef(g.nodes[s2])
+	e := edge.New(n[0], n[1])
+	g.edges[edge.GetRef(e)] = e
+	g.space[n[0]] = append(g.space[n[0]], e)
+	g.space[n[1]] = append(g.space[n[0]], e)
 }
 
 func TotalNodes(g Graph) int {
@@ -55,11 +50,11 @@ func TotalNodes(g Graph) int {
 }
 
 func AllNodes(g Graph) string {
-	var allNodes strings.Builder
-	for i := 0; i < len(g.nodes); i++ {
-		allNodes.WriteString("node:" + node.GetRef(g.nodes[i]))
+	var allNodes string
+	for k, _ := range g.nodes {
+		allNodes += node.GetRef(g.nodes[k])
 	}
-	return allNodes.String()
+	return allNodes
 }
 
 func GetName(g Graph) string {
@@ -67,17 +62,11 @@ func GetName(g Graph) string {
 }
 
 func Print(g Graph) {
-	fmt.Println("Graph:" + g.name)
-	fmt.Printf("\t %s \t", " ")
-	for i := 0; i < len(g.space[0]); i++ {
-		fmt.Printf("\t %s \t", g.space[X][i])
-	}
-	fmt.Println()
-	for i := 0; i < len(g.space[X]); i++ {
-		fmt.Printf("\t %s \t", g.space[i])
-		for j := 0; j < len(g.space[Y]); j++ {
-			fmt.Printf("\t %s \t", g.space[i][j])
-		}
-		fmt.Println()
-	}
+	json, _ := json.Marshal(g.space)
+	fmt.Println(string(json))
+}
+
+func Printf(g Graph) {
+	json, _ := json.Marshal(g.space)
+	tableprinter.PrintJSON(os.Stdout, json)
 }

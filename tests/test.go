@@ -1,7 +1,7 @@
 package consts
 
 import (
-	gui "graphgdb/gui"
+	gui "vora-core/gui"
 )
 
 func Test(argv ...string) {
