@@ -3,9 +3,9 @@ package access
 import (
 	errors "errors"
 	fmt "fmt"
-	crypt "vora-core/crypt"
-	system "vora-core/system"
-	files "vora-core/utils/files"
+	crypt "vora/crypt"
+	system "vora/system"
+	files "vora/utils/files"
 
 	cobra "github.com/spf13/cobra"
 	viper "github.com/spf13/viper"

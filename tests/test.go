@@ -1,7 +1,7 @@
 package consts
 
 import (
-	gui "vora-core/gui"
+	gui "vora/gui"
 )
 
 func Test(argv ...string) {

@@ -17,8 +17,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package cmd
 
 import (
-	access "vora-core/access"
-	gui "vora-core/gui"
+	access "vora/access"
+	gui "vora/gui"
 
 	cobra "github.com/spf13/cobra"
 )

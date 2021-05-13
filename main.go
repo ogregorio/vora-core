@@ -1,13 +1,13 @@
 package main
 
 import (
-	cmd "vora-core/cmd"
-	database "vora-core/models"
-	system "vora-core/system"
+	cmd "vora/cmd"
+	database "vora/models"
+	system "vora/system"
 )
 
 func main() {
 	system.System()
-	database.NewDatabase()
+	database.NewDomain()
 	cmd.Execute()
 }

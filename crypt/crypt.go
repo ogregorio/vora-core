@@ -1,8 +1,8 @@
 package crypt
 
 import (
-	errorTreat "vora-core/io/error"
-	files "vora-core/utils/files"
+	errorTreat "vora/io/error"
+	files "vora/utils/files"
 
 	openssl "github.com/Luzifer/go-openssl/v4"
 	cobra "github.com/spf13/cobra"

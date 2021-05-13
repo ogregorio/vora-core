@@ -1,4 +1,4 @@
-# vora-core
+# vora
 A simple database graph based.
 
 Dependencies:

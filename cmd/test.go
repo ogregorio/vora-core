@@ -17,7 +17,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package cmd
 
 import (
-	tests "vora-core/tests"
+	tests "vora/tests"
 
 	cobra "github.com/spf13/cobra"
 )

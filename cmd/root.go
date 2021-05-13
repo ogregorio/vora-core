@@ -4,16 +4,16 @@ import (
 	bytes "bytes"
 	fmt "fmt"
 	os "os"
-	errorTreat "vora-core/io/error"
-	files "vora-core/utils/files"
+	errorTreat "vora/io/error"
+	files "vora/utils/files"
 
 	cobra "github.com/spf13/cobra"
 	viper "github.com/spf13/viper"
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "vora-core",
-	Short: "vora-core is a fast and simple database graph based.",
+	Use:   "vora",
+	Short: "vora is a fast and simple database graph based.",
 	Long:  `A fast and flexible database graph based`,
 	Run: func(cmd *cobra.Command, args []string) {
 
@@ -29,9 +29,9 @@ func Execute() {
 }
 
 func initConfig() {
-	viper.SetConfigName("config")           // name of config file
-	viper.SetConfigType("yaml")             // type of config file
-	viper.AddConfigPath("$HOME/vora-core/") // where is file
+	viper.SetConfigName("config")      // name of config file
+	viper.SetConfigType("yaml")        // type of config file
+	viper.AddConfigPath("$HOME/vora/") // where is file
 
 	// try to get confi file
 	err := viper.ReadInConfig()
