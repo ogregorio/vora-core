@@ -15,10 +15,9 @@ var format string = "%s | %s"
 
 //Access provides a first access function
 func CreateAccess(login string, password string) error {
-	data := fmt.Sprintf(format, login, password)
 	return files.Write(
 		viper.GetString("credentials"),
-		crypt.Encrypt(crypt.Keygen(crypt.Generatrix()), data),
+		encryptedLogin(login, password),
 	)
 }
 
@@ -57,4 +56,10 @@ func readRegisteredCredentials() (string, string) {
 	var user, password string
 	fmt.Sscanf(data, format, &user, &password)
 	return user, password
+}
+
+//encryptedLogin from login and password
+func encryptedLogin(login string, password string) string {
+	data := fmt.Sprintf(format, login, password)
+	return crypt.Encrypt(crypt.Keygen(crypt.Generatrix()), data)
 }

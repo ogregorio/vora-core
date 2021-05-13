@@ -1,4 +1,4 @@
-# vora
+# Vora
 A simple database graph based.
 
 Dependencies:
