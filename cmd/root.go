@@ -9,6 +9,7 @@ import (
 	errorTreat "vora/io/error"
 	run "vora/run"
 	files "vora/utils/files"
+	block "vora/utils/try"
 
 	cobra "github.com/spf13/cobra"
 	viper "github.com/spf13/viper"
@@ -25,12 +26,7 @@ var rootCmd = &cobra.Command{
 	Short: "Vora is a consistent and simple database graph based.",
 	Long:  `A consistent and flexible database graph based.`,
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
-		if len(args) > 0 {
-			preRun()
-		} else {
-			fmt.Println("Ops! Invalid command.")
-		}
-
+		preRun()
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 	},
@@ -67,12 +63,21 @@ func initConfig() {
 }
 
 func preRun() {
-	if verbose {
-		gui.VERBOSE = true
-	} else {
-		gui.VERBOSE = false
-	}
+	block.Block{
+		Try: func() {
+			verboseCheck()
+			loginCheck()
+		},
+		Catch: func(e block.Exception) {
+			gui.DMessage("Login credentials not found!", "R")
+			os.Exit(-1)
+		},
+		Finally: func() {},
+	}.Do()
 
+}
+
+func loginCheck() {
 	if setup != nil {
 		if setup[0] == "true" {
 			temp := strings.Split(setup[1], "@")
@@ -81,5 +86,13 @@ func preRun() {
 	} else {
 		temp := strings.Split(connect, "@")
 		run.Login(temp[0], temp[1])
+	}
+}
+
+func verboseCheck() {
+	if verbose {
+		gui.VERBOSE = true
+	} else {
+		gui.VERBOSE = false
 	}
 }

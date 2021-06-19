@@ -25,8 +25,8 @@ import (
 
 var add cmdstructs.Add
 
-// addCmd represents the add command
-var addCmd = &cobra.Command{
+// database_addCmd is add command to add into database
+var database_addCmd = &cobra.Command{
 	Use:   "add",
 	Short: "Command to add any type of elements",
 	Long:  `Command to add any type of elements`,
@@ -36,10 +36,5 @@ var addCmd = &cobra.Command{
 }
 
 func init() {
-	addCmd.PersistentFlags().StringVarP(&add.Domain, "domain", "", "", "select domain to work")
-	addCmd.PersistentFlags().StringVarP(&add.Model, "model", "m", "", "declare a type of model into the domain")
-	addCmd.PersistentFlags().StringVarP(&add.Name, "name", "n", "", "declare a name of model into the domain")
-	addCmd.PersistentFlags().StringVarP(&add.Source, "source", "s", "", "declare a source of model into the domain")
-	addCmd.PersistentFlags().StringVarP(&add.Destiny, "destiny", "d", "", "declare a destiny of model into the domain")
-	rootCmd.AddCommand(addCmd)
+
 }

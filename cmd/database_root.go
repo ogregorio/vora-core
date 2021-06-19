@@ -22,8 +22,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var databaseName string
-
 // databaseCmd represents the database command
 var databaseCmd = &cobra.Command{
 	Use:   "database",
@@ -35,8 +33,6 @@ var databaseCmd = &cobra.Command{
 }
 
 func init() {
-	databaseCmd.PersistentFlags().StringVarP(&databaseName, "name", "n", "", "create a database name")
-	databaseCmd.MarkFlagRequired("name")
-	databaseCmd.AddCommand(addCmd)
+	databaseCmd.AddCommand(database_addCmd)
 	rootCmd.AddCommand(databaseCmd)
 }
