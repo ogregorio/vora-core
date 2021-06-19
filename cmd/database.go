@@ -17,24 +17,26 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package cmd
 
 import (
-	cobra "github.com/spf13/cobra"
+	"fmt"
+
+	"github.com/spf13/cobra"
 )
 
-// doctorCmd represents the doctor command
-var doctorCmd = &cobra.Command{
-	Use:   "doctor [OPTIONS] [COMMANDS]",
-	Short: "Run a doctor to validate the components or events situation",
-	Long: `Run a doctor to validate the components or events situation,
-	this will ensure that your database is running in good health`,
-	Args: cobra.MinimumNArgs(1),
+var databaseName string
+
+// databaseCmd represents the database command
+var databaseCmd = &cobra.Command{
+	Use:   "database",
+	Short: "High-level database manipulate commands.",
+	Long:  `High-level database manipulate commands.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		switch args[0] {
-		case "all":
-			//doctor.doctor()
-		}
+		fmt.Println("database called")
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(doctorCmd)
+	databaseCmd.PersistentFlags().StringVarP(&databaseName, "name", "n", "", "create a database name")
+	databaseCmd.MarkFlagRequired("name")
+	databaseCmd.AddCommand(addCmd)
+	rootCmd.AddCommand(databaseCmd)
 }

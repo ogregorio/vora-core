@@ -4,7 +4,7 @@ import (
 	color "github.com/gookit/color"
 )
 
-var DEBUG bool
+var VERBOSE bool
 
 const R = color.Red
 const G = color.Green
@@ -12,9 +12,9 @@ const C = color.Cyan
 const Y = color.Yellow
 const P = color.White
 
-//dMessage print a Debug Message to the console with given color "R(ed),G(reen),C(yan),Y(ellow),W(White)"
+//DMessage print a Debug Message to the console with given color "R(ed),G(reen),C(yan),Y(ellow),W(White)"
 func DMessage(message string, color string) {
-	if DEBUG {
+	if VERBOSE {
 		switch color {
 		case "R":
 			R.Println(message)

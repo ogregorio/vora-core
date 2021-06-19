@@ -1,20 +1,33 @@
 package models
 
+import "time"
+
 type Node struct {
-	ref string
+	meta    Metadata
+	data    string
+	visited bool
+}
+
+type Metadata struct {
+	_id          string
+	pHash        string
+	nHash        string
+	filetype     string
+	lastModified time.Time
+	createDate   time.Time
 }
 
 func New(name string) Node {
 	var node Node
-	node.ref = name
+	node.data = name
 	return node
 }
 
-func GetRef(node Node) string {
-	return node.ref
+func GetData(node Node) string {
+	return node.data
 }
 
-func SetRef(node Node, ref string) Node {
-	node.ref = ref
+func SetData(node Node, ref string) Node {
+	node.data = ref
 	return node
 }

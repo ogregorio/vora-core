@@ -17,32 +17,29 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package cmd
 
 import (
-	fmt "fmt"
+	cmdstructs "vora/cmd/cmdstructs"
+	run "vora/run"
 
 	cobra "github.com/spf13/cobra"
 )
 
+var add cmdstructs.Add
+
 // addCmd represents the add command
 var addCmd = &cobra.Command{
 	Use:   "add",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command.`,
+	Short: "Command to add any type of elements",
+	Long:  `Command to add any type of elements`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("add called")
+		run.Add(add)
 	},
 }
 
 func init() {
+	addCmd.PersistentFlags().StringVarP(&add.Domain, "domain", "", "", "select domain to work")
+	addCmd.PersistentFlags().StringVarP(&add.Model, "model", "m", "", "declare a type of model into the domain")
+	addCmd.PersistentFlags().StringVarP(&add.Name, "name", "n", "", "declare a name of model into the domain")
+	addCmd.PersistentFlags().StringVarP(&add.Source, "source", "s", "", "declare a source of model into the domain")
+	addCmd.PersistentFlags().StringVarP(&add.Destiny, "destiny", "d", "", "declare a destiny of model into the domain")
 	rootCmd.AddCommand(addCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// addCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// addCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

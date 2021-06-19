@@ -32,13 +32,13 @@ func New(s string) Realm {
 func AddNode(r Realm, s string) {
 	n := node.New(s)
 	r.nodes[s] = n
-	r.space[node.GetRef(n)] = []edge.Edge{}
+	r.space[node.GetData(n)] = []edge.Edge{}
 }
 
 func AddEdge(r Realm, s1 string, s2 string) {
 	var n [2]string
-	n[0] = node.GetRef(r.nodes[s1])
-	n[1] = node.GetRef(r.nodes[s2])
+	n[0] = node.GetData(r.nodes[s1])
+	n[1] = node.GetData(r.nodes[s2])
 	e := edge.New(n[0], n[1])
 	r.edges[edge.GetRef(e)] = e
 	r.space[n[0]] = append(r.space[n[0]], e)
@@ -52,7 +52,7 @@ func TotalNodes(r Realm) int {
 func AllNodes(r Realm) string {
 	var allNodes string
 	for k, _ := range r.nodes {
-		allNodes += node.GetRef(r.nodes[k])
+		allNodes += node.GetData(r.nodes[k])
 	}
 	return allNodes
 }

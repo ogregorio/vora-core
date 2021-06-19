@@ -1,6 +1,8 @@
 package crypt
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	errorTreat "vora/io/error"
 	files "vora/utils/files"
 
@@ -42,4 +44,10 @@ func Generatrix() string {
 	root, err := files.Read(viper.GetString("root"))
 	errorTreat.CheckError(err)
 	return root[0]
+}
+
+func HashTo256(value string) string {
+	hasher := sha256.New()
+	hasher.Write([]byte(value))
+	return hex.EncodeToString(hasher.Sum(nil))
 }

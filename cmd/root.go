@@ -17,7 +17,7 @@ import (
 var (
 	connect string
 	setup   []string
-	debug   bool
+	verbose bool
 )
 
 var rootCmd = &cobra.Command{
@@ -25,7 +25,12 @@ var rootCmd = &cobra.Command{
 	Short: "Vora is a consistent and simple database graph based.",
 	Long:  `A consistent and flexible database graph based.`,
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
-		preRun()
+		if len(args) > 0 {
+			preRun()
+		} else {
+			fmt.Println("Ops! Invalid command.")
+		}
+
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 	},
@@ -41,9 +46,9 @@ func Execute() {
 
 func initConfig() {
 
-	rootCmd.PersistentFlags().StringVarP(&connect, "connect", "c", "", "connect using user and pass with user@password")
-	rootCmd.PersistentFlags().StringSliceVarP(&setup, "setup", "s", nil, "start initial setup process: true user@password")
-	rootCmd.PersistentFlags().BoolVarP(&debug, "debug", "d", false, "show debug messages during execution")
+	rootCmd.PersistentFlags().StringVarP(&connect, "connect", "", "", "connect using user and pass with user@password")
+	rootCmd.PersistentFlags().StringSliceVarP(&setup, "setup", "", nil, "start initial setup process: true user@password")
+	rootCmd.PersistentFlags().BoolVarP(&verbose, "verbose", "", false, "show verbose messages during execution")
 
 	viper.SetConfigName("config")      // name of config file
 	viper.SetConfigType("yaml")        // type of config file
@@ -62,10 +67,10 @@ func initConfig() {
 }
 
 func preRun() {
-	if debug {
-		gui.DEBUG = true
+	if verbose {
+		gui.VERBOSE = true
 	} else {
-		gui.DEBUG = false
+		gui.VERBOSE = false
 	}
 
 	if setup != nil {
